@@ -1,0 +1,30 @@
+@{
+    Response.ContentType = "text/xml";
+    
+    var twiml = new Twilio.TwiML.TwilioResponse();
+    
+    // @start snippet
+    int user_pushed = int.Parse(Request["Digits"]);
+    // @end snippet
+    
+    if (user_pushed == 1)
+    {
+        twiml.Say("This will stop the flow of traffic.");
+    }
+   if  (user_pushed == 2)
+   {
+	twiml.Say("This will allow traffic to flow again.");
+   }
+  if ( (user_pushed > 2) || user_pushed == 0)
+   {
+         twiml.Say("That is an invalid option.");
+   }
+    else 
+    {
+        // We'll implement the rest of the functionality in the 
+        // following sections.
+        //twiml.Say("Sorry, I can't do that yet.");
+        twiml.Redirect("handle-incoming-call.xml", "GET");
+    }
+}
+@Html.Raw(twiml.ToString())
